@@ -1,6 +1,6 @@
 let a = '';// first number
 let b = '';// second number
-let sign = '';// знак операции
+let sign = '';// operation sign
 let finish = false;
 
 const digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ];
@@ -10,53 +10,51 @@ const action = ['-', '+', 'X', '/', ]
 const out = document.querySelector('.calc-screen p')
 
 function clearAll () {
-a = '';// first number and result
-b = '';// second number
-sign = '';//знак
-finish = false;
-out.textContent = 0;
+    a = '';// first number and result
+    b = '';// second number
+    sign = '';// sign
+    finish = false;
+    out.textContent = 0;
 }
 
 document.querySelector('.ac').onclick = clearAll
 
 document.querySelector('.buttons').onclick = (event) => {
     if(!event.target.classList.contains('btn')) return;
-    //нажата не кнопка
-    if(event.target.classList.contains('ac')) return;//нажата кнопка clearAll ac
+    // not a button pressed
+    if(event.target.classList.contains('ac')) return;// clearAll ac button pressed
 
     //out.textContent = '';
-    //получаю нажатую кнопку
+    // get the pressed button
     const key = event.target.textContent
 
-    //если нажата клавиша 0-9 или .
+    // if a key between 0-9 or . is pressed
     if (digit.includes(key)) {
         if (b ==='' && sign === ''){
-        a += key;
-        
-        out.textContent = a;
-    }
-    else if (a!=='' && b!=='' && finish){
-        b = key;
-        finish = false;
-        out.textContent = b;
-    }
-    else {
-        b += key
-        out.textContent = b;
-        
-    }
-    console.table(a, b, sign);
+            a += key;
+            out.textContent = a;
+        }
+        else if (a!=='' && b!=='' && finish){
+            b = key;
+            finish = false;
+            out.textContent = b;
+        }
+        else {
+            b += key
+            out.textContent = b;
+        }
+        console.table(a, b, sign);
         return;
     }
 
-    //если нажата клавиша + - / * или .
+    // if a key + - / * or . is pressed
     if (action.includes(key)) {
         sign = key;
         out.textContent = sign;
         console.table(a, b, sign)
         return;
     }
-    //нажатое =
+    // if the "=" key is pressed
     if (key === '=' ) {
         if (b ==='' ) b = a;
         switch (sign) {
@@ -71,7 +69,7 @@ document.querySelector('.buttons').onclick = (event) => {
                     break;
             case "/":
                 if (b === '0') {
-                    out.textContent = 'ошыбка';
+                    out.textContent = 'error';
                     a ='';
                     b ='';
                     sign = '';
